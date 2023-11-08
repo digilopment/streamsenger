@@ -1,0 +1,8 @@
+#BUILD AND PUSH
+DOCKER_COMPOSE_FILE="docker-compose.yml"
+SERVICE_NAME="streamsenger"
+
+docker-compose -f $DOCKER_COMPOSE_FILE build
+sudo docker build -t digilopment/streamsenger . 
+sudo docker login --username=digilopment
+sudo docker push digilopment/streamsenger:latest

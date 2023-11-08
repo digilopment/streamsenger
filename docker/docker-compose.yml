@@ -5,7 +5,7 @@ services:
     image: php:fpm-alpine
     volumes:
       - ./php.ini:/usr/local/etc/php/conf.d/php.ini
-      - ./:/var/www/html:rw
+      - ../:/var/www/html:rw
     networks:
       - internal
       
@@ -15,7 +15,7 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./:/var/www/html:rw
+      - ../:/var/www/html:rw
       - ./default.conf:/etc/nginx/conf.d/default.conf:rw
     depends_on:
       - php
