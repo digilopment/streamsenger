@@ -12,6 +12,30 @@
         header('Access-Control-Allow-Origin: *');
     }
 
+    public function writeToFile()
+    {
+        $lastPosition = 0;
+        if (!file_exists(self::FILE)) {
+            file_put_contents(self::FILE, '');
+        }
+        while (true) {
+            $file = fopen(self::FILE, 'r');
+
+            $fileSize = filesize(self::FILE);
+
+            if ($fileSize > $lastPosition) {
+                fseek($file, $lastPosition);
+                while (!feof($file)) {
+                    $line = fgets($file);
+                    echo "data: $line\n\n";
+                    @ob_flush();
+                    flush();
+                }
+                $lastPosition = ftell($file);
+            }
+        }
+    }
+
     public function run()
     {
 
@@ -35,7 +59,7 @@
                 }
                 $lastPosition = ftell($file);
             }
-            fclose($file);
         }
     }
+
 })->run();
