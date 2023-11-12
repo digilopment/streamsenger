@@ -1,8 +1,25 @@
-#BUILD AND PUSH
-DOCKER_COMPOSE_FILE="docker-compose.yml"
-SERVICE_NAME="streamsenger"
+#!/bin/bash
 
-docker-compose -f $DOCKER_COMPOSE_FILE build
-sudo docker build -t digilopment/streamsenger . 
-sudo docker login --username=digilopment
-sudo docker push digilopment/streamsenger:latest
+# Define variables
+LOCAL_IMAGE_NAME="streamsenger"
+DOCKERHUB_USERNAME="digilopment"
+REPOSITORY_NAME="streamsenger"
+TAG="latest"
+
+# Build the Docker image
+docker build -t $LOCAL_IMAGE_NAME ../
+
+# Tag the Docker image
+docker tag $LOCAL_IMAGE_NAME:$TAG $DOCKERHUB_USERNAME/$REPOSITORY_NAME:$TAG
+
+# Log in to Docker Hub
+docker login
+
+# Push the Docker image to Docker Hub
+docker push $DOCKERHUB_USERNAME/$REPOSITORY_NAME:$TAG
+
+# Clean up: Remove the local image (optional)
+# docker rmi $LOCAL_IMAGE_NAME:$TAG
+
+# Inform user about completion
+echo "Docker image pushed to $DOCKERHUB_USERNAME/$REPOSITORY_NAME:$TAG"

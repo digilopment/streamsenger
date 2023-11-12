@@ -1,5 +1,0 @@
-#cd docker
-docker system prune
-docker-compose down
-docker-compose up -d
-google-chrome http://localhost  >/dev/null
