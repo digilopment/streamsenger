@@ -5,8 +5,9 @@
 
     public function __construct()
     {
-        header('Content-Type: text/event-stream');
-        header('Cache-Control: no-store');
+        header('Content-Type: text/event-stream; charset=utf-8');
+        header('Cache-Control: no-cache,no-store');
+        header('Connection: keep-alive');
         header('X-Accel-Buffering: no');
         header('Connection: keep-alive');
         header('Access-Control-Allow-Origin: *');
@@ -34,8 +35,14 @@
                     flush();
                 }
                 $lastPosition = ftell($file);
+            } else {
+                echo "\n";
+                @ob_flush();
+                flush();
+                usleep(0.125 * 1000000);
             }
             fclose($file);
         }
     }
+
 })->run();
